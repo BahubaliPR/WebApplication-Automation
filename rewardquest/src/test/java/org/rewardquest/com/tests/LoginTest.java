@@ -8,9 +8,15 @@ public class LoginTest extends Base {
 
 	public LoginPage login = null;
 
-	@Test
-	public void performPracticeTable() {
+	@Test(priority=1)
+	public void loginWithValidCredentials() {
 		login = new LoginPage(driver);
-		login.getDataFromTheTable();
+		login.validLoginCredentials();
+	}
+	
+	@Test(priority=2)
+	public void loginWithInValidCredentials() {
+		login = new LoginPage(driver);
+		login.invalidLoginCredentials();
 	}
 }
