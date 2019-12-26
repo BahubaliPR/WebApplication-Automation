@@ -74,6 +74,7 @@ public class LoginPage {
 
 			wait.waitUntilElementToBeVisible(errorMessage, driver);
 			textError = errorMessage.getText();
+			System.out.println(textError);
 			Assert.assertEquals(textError, "Invalid username or password.");
 
 		} catch (Exception e) {
