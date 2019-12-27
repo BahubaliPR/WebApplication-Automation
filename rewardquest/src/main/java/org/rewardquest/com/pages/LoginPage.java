@@ -13,7 +13,7 @@ public class LoginPage {
 
 	private WebDriver driver = null;
 	private WebDriverWaits wait = null;
-	String textError;
+	private String textError;
 	
 
 	@FindBy(how = How.XPATH, using = ".//input[@placeholder='Your Name']")
