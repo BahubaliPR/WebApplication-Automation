@@ -36,7 +36,7 @@ public class WebDriverWaits {
 	 * waits until current page to be loaded
 	 */
 	public void waitUntilPageLoad(WebDriver driver) {
-		driver.manage().timeouts().pageLoadTimeout(implicitWaitTime, TimeUnit.SECONDS);
+		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 	}
 
 	/*

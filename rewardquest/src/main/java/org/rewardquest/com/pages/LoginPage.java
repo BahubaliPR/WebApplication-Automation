@@ -1,22 +1,20 @@
 package org.rewardquest.com.pages;
 
-/*
- * Bahubali P R
- */
-import java.util.List;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.rewardquest.com.wait.WebDriverWaits;
+import org.testng.Assert;
 
 public class LoginPage {
 
-	public WebDriver driver = null;
-
+	private WebDriver driver = null;
+	private WebDriverWaits wait = null;
+	private String textError;
+	
 
 	@FindBy(how = How.XPATH, using = ".//input[@placeholder='Your Name']")
 	private WebElement enterUserName;
@@ -27,6 +25,13 @@ public class LoginPage {
 	@FindBy(how = How.XPATH, using = ".//button[@class='signIn']")
 	private WebElement signIn;
 
+	@FindBy(how = How.XPATH, using = ".//mat-error")
+	WebElement errorMessage;
+	
+	@FindBy(how = How.XPATH, using = ".//span[contains(text(),'Rewards Quest')]")
+	WebElement rqHeader;
+	
+
 	/*
 	 * Initialize all the web elements to driver
 	 */
@@ -34,29 +39,58 @@ public class LoginPage {
 		try {
 			this.driver = driver;
 			PageFactory.initElements(driver, this);
-		}
-		catch(Exception e) {
+			
+			wait = new WebDriverWaits();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/*
-	 * Clicks on DEMO SITES Clicks on Automation practice table Select column
-	 * Select cell data from the table
+	 * Provides valid login credentials
 	 */
-	public void getDataFromTheTable() {
+	public void validLoginCredentials() {
 		try {
+			wait.waitUntilElementToBeVisible(enterUserName, driver);
+			enterUserName.sendKeys("administrator");
 
-			enterUserName.sendKeys("admin");
-
+			wait.waitUntilElementToBeVisible(enterPassword, driver);
 			enterPassword.sendKeys("abc@123");
 
+			wait.waitUntilElementToBeClickable(signIn, driver);
 			signIn.click();
-			
-		}
-		catch(Exception e) {
-			e.printStackTrace();
+
+			wait.waitUntilElementToBeClickable(rqHeader, driver);
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+	        js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", rqHeader);
+	        System.out.println("Logged In Successfully.");
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 	}
-		
+
+	/*
+	 * Provides invalid login credentials
+	 */
+	public void invalidLoginCredentials() {
+		try {
+			wait.waitUntilElementToBeVisible(enterUserName, driver);
+			enterUserName.sendKeys("admin1");
+
+			wait.waitUntilElementToBeVisible(enterPassword, driver);
+			enterPassword.sendKeys("abc@123");
+
+			wait.waitUntilElementToBeClickable(signIn, driver);
+			signIn.click();
+
+			wait.waitUntilElementToBeVisible(errorMessage, driver);
+			textError = errorMessage.getText();
+			Assert.assertEquals(textError, "Invalid username or password.");
+			System.out.println("Verified testcase with invalid test data.");
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }
