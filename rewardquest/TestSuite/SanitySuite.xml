@@ -5,6 +5,7 @@
 	<test name="Test">
 		<classes>
 			<class name="org.rewardquest.com.tests.LoginTest" />
+			<class name="org.rewardquest.com.tests.CreatePromotionTest" />
 		</classes>
 	</test>
 

@@ -8,6 +8,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,7 +19,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.rewardquest.com.configfilereader.PropertiesFileReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+
 import org.rewardquest.com.extentreports.ExtentReport;
+import org.rewardquest.com.logger.Loggers;
 import org.rewardquest.com.utility.ExcelReader;
 import org.rewardquest.com.webdriverlisteners.WebEventListener;
 
@@ -53,6 +56,8 @@ public class Base {
 	 * Set the URL to be navigated
 	 */
 	public void navigateToURL() {
+		String log4jConfPath = Loggers.getResourcePath("/src/main/resources/configfiles/log4j.properties");
+		PropertyConfigurator.configure(log4jConfPath);
 		driver.get(reader.getApplicationUrl());
 	}
 

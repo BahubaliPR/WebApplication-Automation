@@ -10,10 +10,10 @@ public class ExecutionListeners implements IExecutionListener {
 	private long start = System.currentTimeMillis();
 
 	public void onExecutionStart() {
-		System.out.println("Execution started : " + start);
+		System.out.println("Execution started : " + start + "\n");
 	}
 
 	public void onExecutionFinish() {
-		System.out.println("Execution Finished : " + (System.currentTimeMillis() - start) + "Milli Seconds");
+		System.out.println("Execution Finished : " + (System.currentTimeMillis() - start) + "Milli Seconds"  + "\n");
 	}
 }
